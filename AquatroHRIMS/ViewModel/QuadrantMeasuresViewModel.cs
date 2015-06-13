@@ -133,5 +133,12 @@ namespace AquatroHRIMS.ViewModel
         public string QuadrantName { get; set; }
         public string DepartmentName { get; set; }
     }
+    public class lstSetQuadMeasures
+    {
+        public int GoalID { get; set; }
+        public string[] DeptID { get; set; }
+        public int Count { get; set; }
+        
+    }
 
 }
