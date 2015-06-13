@@ -15,13 +15,36 @@ namespace AquatroHRIMS.Controllers
     {
         //
         // GET: /Performance/
- 
+
+        QuadrantMeasuresViewModel objQuadrantMeasure = new QuadrantMeasuresViewModel();
         public ActionResult Index()
         {
-                  QuadrantMeasuresViewModel objQuadrantMeasure = new QuadrantMeasuresViewModel();
-                  objQuadrantMeasure.DepartmentTypeModel = getDepartmentTypeID();
-                  objQuadrantMeasure.GoalTileModel = getGoalTitleList();
-                  return View(objQuadrantMeasure);
+            try
+            {
+                int LoginID = Convert.ToInt32(HttpContext.User.Identity.Name);
+                List<lstSetQuadMeasures> listQuadMeasure = new List<lstSetQuadMeasures>();
+                DataTable dt = cQuadrantMeasure.getEmpQuadratants(LoginID);
+                if (aobj.Count > 0)
+                {
+                    int count = 0;
+                    foreach (var item in aobj)
+                    {
+                        count++;
+                        listQuadMeasure.Add(new lstSetQuadMeasures { Count = count, GoalID = item, Measures = item.sMesaures, EmpGoalID = item.iID, empcomment = item.sDescription, GoalName = cGoals.Get_ID(Convert.ToInt32(item.objGoals.iObjectID)).sName, EmpFlag = item.bEmpFlag, ManagerFlag = item.bManagerFlag, ManagerComment = item.sManagerDescription });
+                    }
+                    objQuadrantMeasure.list1 = list;
+                }
+                else
+                {
+                    objQuadrantMeasure.DepartmentTypeModel = getDepartmentTypeID();
+                    objQuadrantMeasure.GoalTileModel = getGoalTitleList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           return View(objQuadrantMeasure);
         }
         //Added Swpnesh:-
         [HttpGet]
@@ -58,7 +81,7 @@ namespace AquatroHRIMS.Controllers
             }
 
         }
-        QuadrantMeasuresViewModel objQuadrantMeasure = new QuadrantMeasuresViewModel();
+      
         private SelectList getDepartmentTypeID()
         {
             try
