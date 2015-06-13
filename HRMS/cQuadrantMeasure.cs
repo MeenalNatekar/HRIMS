@@ -213,6 +213,20 @@ namespace HRIMS
             oDB.CallSPROC("uspEmpSummaryComments", a, dt);
             return dt;
         }
+        public static DataTable getSetQuadrantMeasuresList(int LoginUserID)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("GoalName"); 
+            dt.Columns.Add("Measures");
+            dt.Columns.Add("GoalID");
+            dt.Columns.Add("ManagerComment");
+            dt.Columns.Add("ManagerFlag");
+            List<SqlParameter> a = new List<SqlParameter>();
+            a.Add(new SqlParameter("@LoginUserID", SqlDbType.Int));
+            a[a.Count - 1].Value = LoginUserID;
+            oDB.CallSPROC("uspEmpQuadrantMeasures", a, dt);
+            return dt;
+        }
             
     }
 }
